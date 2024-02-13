@@ -9,9 +9,9 @@ export default async ({ req, res, log, error }) => {
   //    .setEndpoint('https://cloud.appwrite.io/v1')
   //    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
   //    .setKey(process.env.APPWRITE_API_KEY);
-
+  log("collectionId is"+ req);
   // You can log messages to the console
-  log('Hello, app123');
+  //log('Hello, app123');
 
   // If something goes wrong, log an error
   error('Hello, Errors!');
