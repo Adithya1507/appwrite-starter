@@ -9,12 +9,13 @@ export default async ({ req, res, log, error }) => {
   //    .setEndpoint('https://cloud.appwrite.io/v1')
   //    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
   //    .setKey(process.env.APPWRITE_API_KEY);
+  try{
   log("collectionId is"+ req.body);
   // You can log messages to the console
   //log('Hello, app123');
-
+  }catch(error1){
   // If something goes wrong, log an error
-  error('Hello, Errors!');
+  error('Hello, Errors!'+ error1);}
 
   // The `req` object contains the request data
   // if (req.method === 'GET') {
