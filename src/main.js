@@ -62,6 +62,6 @@ async function triggerNotary1Function() {
       await axios.post(webhookUrl);
       log('Webhook triggered in the target project.');
     } catch (error1) {
-      error('Error triggering webhook in the target project: ' + error1.message);
+      console.log('Error triggering webhook in the target project: ' + error1.message);
     }
   }
