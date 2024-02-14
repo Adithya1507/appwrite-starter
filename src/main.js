@@ -3,8 +3,11 @@ import { Client,Databases } from 'node-appwrite';
 export default async ({ req, res, log, error }) => {
   try {
       
-      const collectionId = req.body.collectionId;
-      log("reqbody"+req.body)
+      
+      const body=JSON.parse(req.body);
+      log("body"+body)
+      const collectionId = body.collectionId;
+      log("colctnid"+collectionId)
       // Initialize Appwrite client
       const client = new Client()
           .setEndpoint('https://cloud.appwrite.io/v1')
