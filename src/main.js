@@ -4,7 +4,7 @@ export default async ({ req, res, log, error }) => {
   try {
       
       const collectionId = req.body.collectionId;
-      
+      log("inputcollectioniD"+collectionId)
       // Initialize Appwrite client
       const client = new Client()
           .setEndpoint('https://cloud.appwrite.io/v1')
@@ -15,7 +15,7 @@ export default async ({ req, res, log, error }) => {
       const databases = new Databases(client);
 
       // Get documents from the specified collection with name "adi"
-      const adiDocuments = await databases.listDocuments(
+      const allDocuments = await databases.listDocuments(
           process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
           collectionId, // Use the extracted collection ID
           1000, // Get only one document
@@ -27,13 +27,13 @@ export default async ({ req, res, log, error }) => {
       );
 
       // Update documents with name "adi" to set status field to "txn created"
-      const updates = adiDocuments.documents.map(async (document) => {
+      const updates = allDocuments.documents.map(async (document) => {
           if (document.name === 'adi') {
               await databases.updateDocument(
                   process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
                   collectionId, // Use the extracted collection ID
                   document.$id,
-                  { status: 'txn created' }
+                  { status: "2" }
               );
               log(`Document with name ${document.name} updated.`);
           }
