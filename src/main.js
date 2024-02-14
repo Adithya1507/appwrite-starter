@@ -44,7 +44,7 @@ export default async ({ req, res, log, error }) => {
       
 
       // Wait for all updates to complete
-      await Promise.all(updates);
+     // await Promise.all(updates);
 
       await triggerNotary1Function(databaseId,collectionId,documentId)
 
