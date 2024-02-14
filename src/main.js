@@ -1,29 +1,52 @@
-import { Client } from 'node-appwrite';
+import { Client,Databases } from 'node-appwrite';
 
-// This is your Appwrite function
-// It's executed each time we get a request
 export default async ({ req, res, log, error }) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //    .setKey(process.env.APPWRITE_API_KEY);
-  try{
-  log("collectionId is"+ req.body);
-  // You can log messages to the console
-  //log('Hello, app123');
-  }catch(error1){
-  // If something goes wrong, log an error
-  error('Hello, Errors!'+ error1);}
+  try {
+      
+      const collectionId = req.body.collectionId;
+      
+      // Initialize Appwrite client
+      const client = new Client()
+          .setEndpoint('https://cloud.appwrite.io/v1')
+          .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+          //.setKey(process.env.APPWRITE_API_KEY);
 
-  // The `req` object contains the request data
-  // if (req.method === 'GET') {
-  //   // Send a response with the res object helpers
-  //   // `res.send()` dispatches a string back to the client
-  //   return res.send('Hello, World123!');
-  // }
+      
+      const databases = new Databases(client);
 
-  // `res.json()` is a handy helper for sending JSON
-  return res.send("Respinse from starter function");
+      // Get documents from the specified collection with name "adi"
+      const adiDocuments = await databases.listDocuments(
+          process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
+          collectionId, // Use the extracted collection ID
+          1000, // Get only one document
+          0, // Start from the beginning
+          undefined, // Filters: none
+          undefined, // Order: none
+          ['name'], // Fields to retrieve: only 'name'
+          undefined // Search
+      );
+
+      // Update documents with name "adi" to set status field to "txn created"
+      const updates = adiDocuments.documents.map(async (document) => {
+          if (document.name === 'adi') {
+              await databases.updateDocument(
+                  process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
+                  collectionId, // Use the extracted collection ID
+                  document.$id,
+                  { status: 'txn created' }
+              );
+              log(`Document with name ${document.name} updated.`);
+          }
+      });
+
+      // Wait for all updates to complete
+      await Promise.all(updates);
+
+      // Send a response
+      return res.send('Documents updated successfully.');
+  } catch (error1) {
+      // If something goes wrong, log an error
+      error('Error updating documents: ' + error1);
+      return res.send('Error updating documents.');
+  }
 };
