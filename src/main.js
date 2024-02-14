@@ -21,26 +21,24 @@ export default async ({ req, res, log, error }) => {
       const allDocuments = await databases.listDocuments(
           process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
           collectionId, // Use the extracted collection ID
-          1000, // Get only one document
-          0, // Start from the beginning
-          ["name==adi"]
-          // undefined, // Order: none
-          // ['name'], // Fields to retrieve: only 'name'
-          // undefined // Search
+          [
+            Query.equal('name', ['adi'])
+            //Query.greaterThan('year', 1999)
+        ]
       );
-
+  
       // Update documents with name "adi" to set status field to "txn created"
       const updates = allDocuments.documents.map(async (document) => {
-          if (document.name === 'adi') {
+          //if (document.name === 'adi') {
            
               await databases.updateDocument(
                   process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
                   collectionId, // Use the extracted collection ID
                   document.$id,
-                  { status: "2" }
+                  { status: "txn created" }
               );
               log(`Document with name ${document.name} updated.`);
-          }
+          //}
       });
 
       // Wait for all updates to complete
