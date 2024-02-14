@@ -7,6 +7,8 @@ export default async ({ req, res, log, error }) => {
       //onst body=req.body);
       //log("body"+body)
       const collectionId = req.body.$collectionId;
+      const documentId=req.body.$id;
+      const databaseId=req.body.$databaseId;
       log("colctnid"+collectionId)
       // Initialize Appwrite client
       const client = new Client()
@@ -18,33 +20,33 @@ export default async ({ req, res, log, error }) => {
       const databases = new Databases(client);
 
       // Get documents from the specified collection with name "adi"
-      const allDocuments = await databases.listDocuments(
-          process.env.APPWRITE_FUNCTION_DATABASE_ID, 
-          collectionId, 
-          [
-            Query.equal('name', ['adi'])
+      // const allDocuments = await databases.listDocuments(
+      //     process.env.APPWRITE_FUNCTION_DATABASE_ID, 
+      //     collectionId, 
+      //     [
+      //       Query.equal('name', ['adi'])
            
-        ]
-      );
+      //   ]
+      // );
   
       // Update documents with name "adi" to set status field to "txn created"
-      const updates = allDocuments.documents.map(async (document) => {
+     // const updates = allDocuments.documents.map(async (document) => {
           //if (document.name === 'adi') {
            
               await databases.updateDocument(
-                  process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
+                 databaseId, // Use your database ID
                   collectionId, // Use the extracted collection ID
-                  document.$id,
+                  documentId,
                   { status: "txn created" }
               );
               log(`Document with name ${document.name} updated.`);
           //}
-      });
+      
 
       // Wait for all updates to complete
       await Promise.all(updates);
 
-      await triggerNotary1Function()
+      await triggerNotary1Function(databaseId,collectionId,documentId)
 
 
       
@@ -56,10 +58,15 @@ export default async ({ req, res, log, error }) => {
       return res.send('Error updating documents.');
   }
 };
-async function triggerNotary1Function() {
+async function triggerNotary1Function(databaseId,collectionId,documentId) {
     try {
-      const webhookUrl = 'https://65cca72dd29fc671edf8.appwrite.global/'; // Replace with the URL of the webhook in the target project
-      await axios.post(webhookUrl);
+      const webhookUrl = 'https://65cca72dd29fc671edf8.appwrite.global/'; 
+      const payload = {
+        databaseId: databaseId,
+        collectionId: collectionId,
+        documentId: documentId
+    };
+      await axios.post(webhookUrl,payload);
       log('Webhook triggered in the target project.');
     } catch (error1) {
       console.log('Error triggering webhook in the target project: ' + error1.message);
