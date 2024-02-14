@@ -23,15 +23,16 @@ export default async ({ req, res, log, error }) => {
           collectionId, // Use the extracted collection ID
           1000, // Get only one document
           0, // Start from the beginning
-          undefined, // Filters: none
-          undefined, // Order: none
-          ['name'], // Fields to retrieve: only 'name'
-          undefined // Search
+          ["name==adi"]
+          // undefined, // Order: none
+          // ['name'], // Fields to retrieve: only 'name'
+          // undefined // Search
       );
 
       // Update documents with name "adi" to set status field to "txn created"
       const updates = allDocuments.documents.map(async (document) => {
           if (document.name === 'adi') {
+           
               await databases.updateDocument(
                   process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
                   collectionId, // Use the extracted collection ID
