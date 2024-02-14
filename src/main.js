@@ -61,7 +61,7 @@ async function triggerNotary1Function() {
       const webhookUrl = 'https://65cca72dd29fc671edf8.appwrite.global/'; // Replace with the URL of the webhook in the target project
       await axios.post(webhookUrl);
       log('Webhook triggered in the target project.');
-    } catch (error) {
-      error('Error triggering webhook in the target project: ' + error.message);
+    } catch (error1) {
+      error('Error triggering webhook in the target project: ' + error1.message);
     }
   }
