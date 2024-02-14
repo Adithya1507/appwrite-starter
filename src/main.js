@@ -45,14 +45,14 @@ export default async ({ req, res, log, error }) => {
 
       // Wait for all updates to complete
      // await Promise.all(updates);
-          const documentDetails = await databases.listDocuments(
+          const documentDetails = await databases.getDocument(
           process.env.APPWRITE_FUNCTION_DATABASE_ID, 
           collectionId,
           documentId
           );
           log("documentDetails"+documentDetails);
           if(documentDetails.status=="txn created")
-      await triggerNotary1Function(databaseId,collectionId,documentId)
+            await triggerNotary1Function(databaseId,collectionId,documentId)
 
 
       
