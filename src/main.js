@@ -1,5 +1,5 @@
 import { Client,Databases,Query } from 'node-appwrite';
-
+import axios from 'axios';
 export default async ({ req, res, log, error }) => {
   try {
       
@@ -19,11 +19,11 @@ export default async ({ req, res, log, error }) => {
 
       // Get documents from the specified collection with name "adi"
       const allDocuments = await databases.listDocuments(
-          process.env.APPWRITE_FUNCTION_DATABASE_ID, // Use your database ID
-          collectionId, // Use the extracted collection ID
+          process.env.APPWRITE_FUNCTION_DATABASE_ID, 
+          collectionId, 
           [
             Query.equal('name', ['adi'])
-            //Query.greaterThan('year', 1999)
+           
         ]
       );
   
@@ -44,6 +44,10 @@ export default async ({ req, res, log, error }) => {
       // Wait for all updates to complete
       await Promise.all(updates);
 
+      await triggerNotary1Function()
+
+
+      
       // Send a response
       return res.send('Documents updated successfully.');
   } catch (error1) {
@@ -52,3 +56,12 @@ export default async ({ req, res, log, error }) => {
       return res.send('Error updating documents.');
   }
 };
+async function triggerNotary1Function() {
+    try {
+      const webhookUrl = 'https://65cca72dd29fc671edf8.appwrite.global/'; // Replace with the URL of the webhook in the target project
+      await axios.post(webhookUrl);
+      log('Webhook triggered in the target project.');
+    } catch (error) {
+      error('Error triggering webhook in the target project: ' + error.message);
+    }
+  }
