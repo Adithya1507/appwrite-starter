@@ -5,7 +5,7 @@ export default async ({ req, res, log, error }) => {
       
       
       //onst body=req.body);
-      //log("body"+body)
+      log("body"+req.body)
       const collectionId = req.body.$collectionId;
       const documentId=req.body.$id;
       const databaseId=req.body.$databaseId;
@@ -39,7 +39,7 @@ export default async ({ req, res, log, error }) => {
                   documentId,
                   { status: "txn created" }
               );
-              log(`Document with name ${document.name} updated.`);
+             // log(`Document with name ${document.name} updated.`);
           //}
       
 
