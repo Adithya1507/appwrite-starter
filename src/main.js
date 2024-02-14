@@ -4,9 +4,9 @@ export default async ({ req, res, log, error }) => {
   try {
       
       
-      const body=JSON.parse(req.body);
-      log("body"+body)
-      const collectionId = body.collectionId;
+      //onst body=req.body);
+      //log("body"+body)
+      const collectionId = req.body.$collectionId;
       log("colctnid"+collectionId)
       // Initialize Appwrite client
       const client = new Client()
