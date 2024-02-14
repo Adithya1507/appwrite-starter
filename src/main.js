@@ -4,7 +4,7 @@ export default async ({ req, res, log, error }) => {
   try {
       
       const collectionId = req.body.collectionId;
-      log("inputcollectioniD"+collectionId)
+      log("reqbody"+req.body)
       // Initialize Appwrite client
       const client = new Client()
           .setEndpoint('https://cloud.appwrite.io/v1')
