@@ -80,7 +80,7 @@ async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
       log("encryptUrl"+encryptUrl)
       const encryptedData=await axios.post(encryptUrl,dataToEncrypt);
       log("encryptedData: " + JSON.stringify(encryptedData.data));
-      const data = JSON.parse(encryptedData.data);
+      const data = encryptedData.data;
       const cipherText = data.encryptObject.ciphertext;
       log("cipherText"+ cipherText)
       await axios.post(webhookUrl,cipherText);
