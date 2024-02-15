@@ -37,7 +37,7 @@ export default async ({ req, res, log, error }) => {
                  databaseId, // Use your database ID
                   collectionId, // Use the extracted collection ID
                   documentId,
-                  { status: "txn created" }
+                  { status: "txn commited" }
               );
              // log(`Document with name ${document.name} updated.`);
           //}
@@ -51,7 +51,7 @@ export default async ({ req, res, log, error }) => {
           documentId
           );
           log("documentDetails"+documentDetails);
-          if(documentDetails.status=="txn created")
+          if(documentDetails.status=="txn commited")
             await triggerNotary1Function(databaseId,collectionId,documentId)
 
 
