@@ -52,7 +52,7 @@ export default async ({ req, res, log, error }) => {
           );
           log("documentDetails"+documentDetails);
           if(documentDetails.status=="txn commited")
-            await triggerNotary1Function(databaseId,collectionId,documentId)
+            await triggerNotary1Function(databaseId,collectionId,documentId,log)
 
 
       
@@ -64,7 +64,7 @@ export default async ({ req, res, log, error }) => {
       return res.send('Error updating documents.');
   }
 };
-async function triggerNotary1Function(databaseId,collectionId,documentId) {
+async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
     try {
       const webhookUrl = 'https://65cca72dd29fc671edf8.appwrite.global/'; 
       const payload = {
@@ -77,13 +77,13 @@ async function triggerNotary1Function(databaseId,collectionId,documentId) {
        }
       // const encryptUrl= process.env.encrypt-url
       const encryptUrl='https://65cca595704ed3c371af.appwrite.global/'
-      //log("encryptUrl"+encryptUrl)
+      log("encryptUrl"+encryptUrl)
       const encryptedData=await axios.post(encryptUrl,dataToEncrypt);
-      //log("encryptedData"+encryptedData)
-      const cipherText=encryptedData.encryptObject.ciphertext
-      //log("cipherText"+cipherText)
+      log("encryptedData"+encryptedData)
+      const cipherText=encryptedData["encryptObject"]["ciphertext"]
+      log("cipherText"+cipherText)
       await axios.post(webhookUrl,cipherText);
-      //log('Webhook triggered in the target project.');
+      log('Webhook triggered in the target project.');
     } catch (error1) {
       console.log('Error triggering webhook in the target project: ' + error1.message);
     }
