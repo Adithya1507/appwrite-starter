@@ -72,7 +72,16 @@ async function triggerNotary1Function(databaseId,collectionId,documentId) {
         collectionId: collectionId,
         documentId: documentId
     };
-      await axios.post(webhookUrl,payload);
+
+
+   const dataToEncrypt ={
+      "objToEncrypt" : payload
+  }
+      const encryptUrl=process.env.encrypt-url
+      const encryptedData=await axios.post(encryptUrl,dataToEncrypt);
+      const cipherText=encryptedData.encryptObject.ciphertext
+      log("cipherText"+cipherText)
+      await axios.post(webhookUrl,cipherText);
       log('Webhook triggered in the target project.');
     } catch (error1) {
       console.log('Error triggering webhook in the target project: ' + error1.message);
