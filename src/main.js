@@ -67,30 +67,65 @@ export default async ({ req, res, log, error }) => {
 
 async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
   try {
-     
-      const payload = {
-        databaseId: databaseId,
-        collectionId: collectionId,
-        documentId: documentId
-    };
-      // const dataToEncrypt ={
-      //       "objToEncrypt" : payload
-      //  }
-      // const encryptUrl= process.env.encrypt_url;
 
-
-
-
-     // const encryptedData=await axios.post(encryptUrl,dataToEncrypt);
-
+    const payload = {
+      databaseId: databaseId,
+      collectionId: collectionId,
+      documentId: documentId
+  };
     const encryptedData= encryptObject(
       payload,
       Buffer.from(process.env.KEY, "hex"))
 
       const cipherText = encryptedData.ciphertext.toString();
 
-      const notaryurl1 = process.env.notary1_url; 
-      await axios.post(notaryurl1,cipherText);
+
+
+
+     
+    
+    const notaryClient = new Client()
+    .setEndpoint('https://cloud.appwrite.io/v1')
+    .setProject(process.env.NOTARY_PROJECTID)
+    
+    const databases = new Databases(notaryClient);
+
+    const query = [
+      Query.equal('entityId', 2)
+     ];
+  
+  // List documents from collection1 with the specified query filter
+    databases.listDocuments('65c9f1e49ee8dcddbe37', [], 100, 0, query)
+      .then(async response => {
+          // Handle the response
+          console.log(response);
+          const documents = response.documents;
+          
+          // Extract the 'url' field from each document
+          const urls = documents.map(doc => doc.url);
+          console.log('URLs:', urls);
+          await axios.post(urls,cipherText);
+          // Process the URLs as needed
+      })
+      .catch(error => {
+          // Handle errors
+          console.error('Error:', error);
+      });
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+      //const notaryurl1 = process.env.notary1_url; 
+      
 
   } catch (error1) {
       log('Error triggering webhook in the target project: ' + error1.message);
