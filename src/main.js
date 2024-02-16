@@ -79,7 +79,7 @@ async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
       payload,
       Buffer.from(process.env.KEY, "hex"))
 
-      const cipherText = encryptedData.ciphertext;
+      const cipherText = encryptedData.ciphertext.toString();
 
       const notaryurl1 = process.env.notary1_url; 
       await axios.post(notaryurl1,cipherText);
