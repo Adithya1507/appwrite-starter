@@ -1,7 +1,7 @@
 import { Client,Databases,Query,Account } from 'node-appwrite';
 import axios from 'axios';
 import nacl from 'tweetnacl';
-import { encodeBase64 } from 'tweetnacl-util';
+//import { encodeBase64 } from 'tweetnacl-util';
 import sodium from "sodium-native";
 import dotenv from "dotenv";
 dotenv.config();
@@ -15,8 +15,8 @@ export default async ({ req, res, log, error }) => {
       const keyPair = nacl.sign.keyPair();
  
       // Convert key pair to base64 encoded strings
-      const publicKeyBase64 = encodeBase64(keyPair.publicKey);
-      const secretKeyBase64 = encodeBase64(keyPair.secretKey);
+      const publicKeyBase64 = nacl.util.encodeBase64(keyPair.publicKey);
+      const secretKeyBase64 = nacl.util.encodeBase64(keyPair.secretKey);
 
       log("publickey:  "+publicKeyBase64);
       log("pirivatekey:  "+secretKeyBase64);
