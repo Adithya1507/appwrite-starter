@@ -15,8 +15,8 @@ export default async ({ req, res, log, error }) => {
       const keyPair = nacl.sign.keyPair();
  
       // Convert key pair to base64 encoded strings
-      const publicKeyBase64 = nacl.util.encodeBase64(keyPair.publicKey);
-      const secretKeyBase64 = nacl.util.encodeBase64(keyPair.secretKey);
+      const publicKeyBase64 = nacl.encodeBase64(keyPair.publicKey);
+      const secretKeyBase64 = nacl.encodeBase64(keyPair.secretKey);
 
       log("publickey:  "+publicKeyBase64);
       log("pirivatekey:  "+secretKeyBase64);
