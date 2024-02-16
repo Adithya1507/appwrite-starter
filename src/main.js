@@ -18,14 +18,18 @@ export default async ({ req, res, log, error }) => {
           .setKey(process.env.APPWRITE_API_KEY)
           
       const databases = new Databases(client);
-      const account = new Account(client);
-      //const response = await externalClient.account.get();
-      const response = await account.get();
-       log("response",response)
-   // Get organization ID from the response
-       const organizationId = response.result.organizations[0].$id;
+  //     const account = new Account(client);
+  //     //const response = await externalClient.account.get();
+  //     const response = await account.get();
+  //      log("response",response)
+  //  // Get organization ID from the response
+  //      const organizationId = response.result.organizations[0].$id;
    
-   log('Organization ID:', organizationId);
+  //  log('Organization ID:', organizationId);
+
+
+
+  
       // Get documents from the specified collection with name "adi"
       // const allDocuments = await databases.listDocuments(
       //     process.env.APPWRITE_FUNCTION_DATABASE_ID, 
