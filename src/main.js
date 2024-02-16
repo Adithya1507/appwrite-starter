@@ -12,14 +12,14 @@ export default async ({ req, res, log, error }) => {
       const collectionId = req.body.$collectionId;
       const documentId=req.body.$id;
       const databaseId=req.body.$databaseId;
-      const keyPair = nacl.sign.keyPair();
+      // const keyPair = nacl.sign.keyPair();
  
-      // Convert key pair to base64 encoded strings
-      const publicKeyBase64 = nacl.encodeBase64(keyPair.publicKey);
-      const secretKeyBase64 = nacl.encodeBase64(keyPair.secretKey);
+      // // Convert key pair to base64 encoded strings
+      // const publicKeyBase64 = nacl.encodeBase64(keyPair.publicKey);
+      // const secretKeyBase64 = nacl.encodeBase64(keyPair.secretKey);
 
-      log("publickey:  "+publicKeyBase64);
-      log("pirivatekey:  "+secretKeyBase64);
+      // log("publickey:  "+publicKeyBase64);
+      // log("pirivatekey:  "+secretKeyBase64);
       // Initialize Appwrite client
       const client = new Client()
           .setEndpoint('https://cloud.appwrite.io/v1')
@@ -80,7 +80,7 @@ export default async ({ req, res, log, error }) => {
 
 async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
   try {
-
+log("ins")
      const payload = {
       databaseId: databaseId,
       collectionId: collectionId,

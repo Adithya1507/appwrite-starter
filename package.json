@@ -12,7 +12,8 @@
     "dotenv": "^16.4.4",
     "node-appwrite": "^9.0.0",
     "sodium-native": "^4.0.8",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "devDependencies": {
     "prettier": "^3.0.0"
