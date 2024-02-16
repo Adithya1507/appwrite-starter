@@ -111,16 +111,18 @@ log("ins")
           const documents = response.documents;
           
           // Extract the 'url' field from each document
-          const urls = documents.map(doc => doc.url).toString();
+          const urls = documents.map(doc => doc.url);
          
           for (const url of urls) {
-            log("URl:"+ url);
-          await axios.post(url.toString(),cipherText);}
+              console.log("URl:"+ url);
+              await axios.post(url.toString(),cipherText);
+        
+        }
           // Process the URLs as needed
       })
       .catch(error1 => {
         
-          log('Error:'+ error1);
+          console.log('Error:'+ error1);
       });
 //const notaryurl1 = process.env.notary1_url; 
 } catch (error1) {
