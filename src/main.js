@@ -1,5 +1,6 @@
 import { Client,Databases,Query,Account } from 'node-appwrite';
 import axios from 'axios';
+import { encodeBase64 } from 'sodium-native';
 import sodium from "sodium-native";
 import dotenv from "dotenv";
 dotenv.config();
@@ -10,7 +11,14 @@ export default async ({ req, res, log, error }) => {
       const collectionId = req.body.$collectionId;
       const documentId=req.body.$id;
       const databaseId=req.body.$databaseId;
-     
+      const keyPair = nacl.sign.keyPair();
+ 
+      // Convert key pair to base64 encoded strings
+      const publicKeyBase64 = encodeBase64(keyPair.publicKey);
+      const secretKeyBase64 = encodeBase64(keyPair.secretKey);
+
+      log("publickey:  "+publicKeyBase64);
+      log("pirivatekey:  "+secretKeyBase64);
       // Initialize Appwrite client
       const client = new Client()
           .setEndpoint('https://cloud.appwrite.io/v1')
@@ -91,11 +99,11 @@ async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
     const databases = new Databases(notaryClient);
 
     const query = [
-      Query.equal('entityId', 2)
+      Query.equal('entityId', ['2'])
      ];
   
   
-    databases.listDocuments('65c9f1e49ee8dcddbe37', [], 100, 0, query)
+    databases.listDocuments('65c9f1dab1c765f9541e','65c9f1e49ee8dcddbe37', [], 100, 0, query)
       .then(async response => {
           // Handle the response
           log("res"+response);
