@@ -1,6 +1,6 @@
 import { Client,Databases,Query,Account } from 'node-appwrite';
 import axios from 'axios';
-import { encodeBase64 } from 'sodium-native';
+import encodeBase64 from 'sodium-native';
 import sodium from "sodium-native";
 import dotenv from "dotenv";
 dotenv.config();
