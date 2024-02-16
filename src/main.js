@@ -118,5 +118,5 @@ async function triggerNotary1Function(databaseId,collectionId,documentId,log) {
 
 
 
-  encryptObject: 
-  ),
+
+  
