@@ -107,13 +107,15 @@ log("ins")
     databases.listDocuments('65c9f1dab1c765f9541e','65c9f1e49ee8dcddbe37', [], 100, 0, query)
       .then(async response => {
           // Handle the response
-          log("res"+response);
+          //log("res"+response);
           const documents = response.documents;
           
           // Extract the 'url' field from each document
           const urls = documents.map(doc => doc.url).toString();
-          log('URLs:'+ urls);
-          await axios.post(urls,cipherText);
+         
+          for (const url of urls) {
+            log("URl:"+ url);
+          await axios.post(url.toString(),cipherText);}
           // Process the URLs as needed
       })
       .catch(error1 => {
