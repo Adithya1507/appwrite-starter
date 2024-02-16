@@ -1,6 +1,7 @@
 import { Client,Databases,Query,Account } from 'node-appwrite';
 import axios from 'axios';
-import encodeBase64 from 'sodium-native';
+import nacl from 'tweetnacl';
+import { encodeBase64 } from 'tweetnacl-util';
 import sodium from "sodium-native";
 import dotenv from "dotenv";
 dotenv.config();
