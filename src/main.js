@@ -115,10 +115,16 @@ log("ins")
           const urls = documents.map(doc => doc.url);
          
           for (const url of urls) {
-              console.log("URl:"+ url);
-              await axios.post(url.toString(),cipherText);
-        
+            console.log("URL: " + url);
+            try {
+                await axios.post(url.toString(), cipherText);
+                console.log("Successfully sent POST request to: " + url);
+            } catch (error) {
+                console.error("Error sending POST request to: " + url);
+                console.error(error);
+            }
         }
+        
           // Process the URLs as needed
       })
       .catch(error1 => {
