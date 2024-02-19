@@ -100,8 +100,9 @@ log("ins")
     const databases = new Databases(notaryClient);
 
     const query = [
-      Query.equal('entityId', ['2'])
-     ];
+      Query.equal('entityId', ['2']),
+      Query.equal('isAllocated', true)
+  ];
   
   
     databases.listDocuments('65c9f1dab1c765f9541e','65c9f1e49ee8dcddbe37', [], 100, 0, query)
